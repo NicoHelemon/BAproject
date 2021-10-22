@@ -1,0 +1,61 @@
+square cropped images        vs     non cropped images
+
+1.00, container ship         vs     1.00, container ship
+0.00, fireboat               vs     0.00, dock
+0.00, dock                   vs     0.00, fireboat
+0.00, drilling rig           vs     0.00, drilling rig
+0.00, breakwater             vs     0.00, ocean liner
+
+0.49, pirate ship            vs     0.37, pirate ship
+0.18, paddle wheel           vs     0.37, paddle wheel
+0.10, fireboat               vs     0.05, lifeboat
+0.08, lifeboat               vs     0.04, drilling rig
+0.04, dock                   vs     0.03, dock
+
+0.18, minibus                vs     0.16, station wagon
+0.12, minivan                vs     0.11, tow truck
+0.12, tow truck              vs     0.11, race car
+0.11, station wagon          vs     0.10, minibus
+0.08, pickup truck           vs     0.09, minivan
+
+0.40, semi-trailer truck     vs     0.67, semi-trailer truck
+0.28, recreational vehicle   vs     0.22, garbage truck
+0.14, moving van             vs     0.07, moving van
+0.04, garbage truck          vs     0.01, tow truck
+0.02, tow truck              vs     0.00, minibus
+
+0.41, tiger cat              vs     0.23, tiger cat
+0.36, tabby cat              vs     0.19, ring-tailed lemur
+0.10, Egyptian Mau           vs     0.16, lynx
+0.07, lynx                   vs     0.11, tabby cat
+0.03, Persian cat            vs     0.09, koala
+
+0.40, tricycle               vs     0.39, tricycle
+0.29, mountain bike          vs     0.26, unicycle
+0.15, unicycle               vs     0.20, mountain bike
+0.12, tandem bicycle         vs     0.13, tandem bicycle
+0.02, moped                  vs     0.01, moped
+
+0.17, llama                  vs     0.26, llama
+0.13, muzzle                 vs     0.14, German Shepherd Dog
+0.11, German Shepherd Dog    vs     0.07, Afghan Hound
+0.06, Shetland Sheepdog      vs     0.05, collie
+0.04, collie                 vs     0.05, Alaskan Malamute
+
+0.44, lynx                   vs     0.16, tabby cat
+0.16, Persian cat            vs     0.16, lynx
+0.07, tiger cat              vs     0.16, tiger cat
+0.06, tabby cat              vs     0.09, Persian cat
+0.05, cheetah                vs     0.06, cougar
+
+0.63, moped                  vs     0.24, moped
+0.12, tandem bicycle         vs     0.23, tricycle
+0.05, tricycle               vs     0.06, tandem bicycle
+0.02, scooter                vs     0.06, lawn mower
+0.02, German Shepherd Dog    vs     0.03, crutch
+
+0.19, impala                 vs     0.19, gazelle
+0.16, dromedary              vs     0.13, ox
+0.11, llama                  vs     0.12, impala
+0.11, gazelle                vs     0.08, bullock cart
+0.09, German Shepherd Dog    vs     0.08, llama

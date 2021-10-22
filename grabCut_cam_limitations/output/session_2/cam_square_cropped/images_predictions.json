@@ -1,0 +1,222 @@
+{
+    "boat.jpg": [
+        [
+            "1.00",
+            "container ship"
+        ],
+        [
+            "0.00",
+            "fireboat"
+        ],
+        [
+            "0.00",
+            "dock"
+        ],
+        [
+            "0.00",
+            "drilling rig"
+        ],
+        [
+            "0.00",
+            "breakwater"
+        ]
+    ],
+    "boats_birds.jpg": [
+        [
+            "0.49",
+            "pirate ship"
+        ],
+        [
+            "0.18",
+            "paddle wheel"
+        ],
+        [
+            "0.10",
+            "fireboat"
+        ],
+        [
+            "0.08",
+            "lifeboat"
+        ],
+        [
+            "0.04",
+            "dock"
+        ]
+    ],
+    "car.jpg": [
+        [
+            "0.18",
+            "minibus"
+        ],
+        [
+            "0.12",
+            "minivan"
+        ],
+        [
+            "0.12",
+            "tow truck"
+        ],
+        [
+            "0.11",
+            "station wagon"
+        ],
+        [
+            "0.08",
+            "pickup truck"
+        ]
+    ],
+    "cars_trucks_highway.jpg": [
+        [
+            "0.40",
+            "semi-trailer truck"
+        ],
+        [
+            "0.28",
+            "recreational vehicle"
+        ],
+        [
+            "0.14",
+            "moving van"
+        ],
+        [
+            "0.04",
+            "garbage truck"
+        ],
+        [
+            "0.02",
+            "tow truck"
+        ]
+    ],
+    "cat.jpg": [
+        [
+            "0.41",
+            "tiger cat"
+        ],
+        [
+            "0.36",
+            "tabby cat"
+        ],
+        [
+            "0.10",
+            "Egyptian Mau"
+        ],
+        [
+            "0.07",
+            "lynx"
+        ],
+        [
+            "0.03",
+            "Persian cat"
+        ]
+    ],
+    "dog_bicycle.jpg": [
+        [
+            "0.40",
+            "tricycle"
+        ],
+        [
+            "0.29",
+            "mountain bike"
+        ],
+        [
+            "0.15",
+            "unicycle"
+        ],
+        [
+            "0.12",
+            "tandem bicycle"
+        ],
+        [
+            "0.02",
+            "moped"
+        ]
+    ],
+    "dog_car.jpg": [
+        [
+            "0.17",
+            "llama"
+        ],
+        [
+            "0.13",
+            "muzzle"
+        ],
+        [
+            "0.11",
+            "German Shepherd Dog"
+        ],
+        [
+            "0.06",
+            "Shetland Sheepdog"
+        ],
+        [
+            "0.04",
+            "collie"
+        ]
+    ],
+    "dog_cat.jpg": [
+        [
+            "0.44",
+            "lynx"
+        ],
+        [
+            "0.16",
+            "Persian cat"
+        ],
+        [
+            "0.07",
+            "tiger cat"
+        ],
+        [
+            "0.06",
+            "tabby cat"
+        ],
+        [
+            "0.05",
+            "cheetah"
+        ]
+    ],
+    "dog_moped.jpg": [
+        [
+            "0.63",
+            "moped"
+        ],
+        [
+            "0.12",
+            "tandem bicycle"
+        ],
+        [
+            "0.05",
+            "tricycle"
+        ],
+        [
+            "0.02",
+            "scooter"
+        ],
+        [
+            "0.02",
+            "German Shepherd Dog"
+        ]
+    ],
+    "donkey_dog_cat_rooster.jpg": [
+        [
+            "0.19",
+            "impala"
+        ],
+        [
+            "0.16",
+            "dromedary"
+        ],
+        [
+            "0.11",
+            "llama"
+        ],
+        [
+            "0.11",
+            "gazelle"
+        ],
+        [
+            "0.09",
+            "German Shepherd Dog"
+        ]
+    ]
+}
