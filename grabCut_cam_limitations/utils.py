@@ -52,30 +52,41 @@ def drawBbox(image, bbox, color = (255, 0, 0), thickness = 3):
     botR = bbox[2:]
     return cv2.rectangle(image.copy(), topL, botR, color, thickness)
 
+def bboxToMask(image, bbox, background_val):
+    mask = np.ones(image.shape[:2], dtype="uint8") * background_val
+    topL_x, topL_y, dx, dy = bbox
+    mask[topL_y:topL_y+dy, topL_x:topL_x+dx] = cv2.GC_PR_FGD
+    return mask
+
 # Applies cv2.grabCut algorithm to an image and a bounding box
 # It returns "mask", i.e. a 2d-array of shape image (w/o the channel) whose pixels take
 # value in {0,1,2,3} = {background, foreground, probable background, probable foreground} 
 # It also returns the final true output mask, a 2d-array again of shape image whose pixels
 # take value in {0,1} = {background, foreground}, which can be used with a bitwise operator.
-def grabCut(image, bbox, definite = True):
+def grabCut(image, mask, mode = 'RECT'):
     cv2.setRNGSeed(0) #https://stackoverflow.com/questions/60954921/python-opencv-doesnt-give-same-output-at-the-same-image
     
-    
-    # Actually has no effect, since it is ovewritten, cf.
     # https://github.com/opencv/opencv/blob/master/modules/imgproc/src/grabcut.cpp
-    if definite:
-        a = 0
-    else:
-        a = 3
     
-    mask, _, _ = cv2.grabCut(
-    image, 
-    np.ones(image.shape[:2], dtype="uint8") * a, 
-    bbox, 
-    np.zeros((1, 65), dtype="float"),
-    np.zeros((1, 65), dtype="float"), 
-    iterCount=10, 
-    mode=cv2.GC_INIT_WITH_RECT)
+    if mode == 'RECT':
+        mask, _, _ = cv2.grabCut(
+        image, 
+        np.zeros(image.shape[:2], dtype="uint8"), 
+        mask, 
+        np.zeros((1, 65), dtype="float"),
+        np.zeros((1, 65), dtype="float"), 
+        iterCount=10, 
+        mode=cv2.GC_INIT_WITH_RECT)
+     
+    elif mode == 'MASK':
+        mask, _, _ = cv2.grabCut(
+        image, 
+        mask, 
+        None, 
+        np.zeros((1, 65), dtype="float"),
+        np.zeros((1, 65), dtype="float"), 
+        iterCount=10, 
+        mode=cv2.GC_INIT_WITH_MASK)
     
     outputMask = boolarrayToImg(np.where((mask == cv2.GC_BGD) | (mask == cv2.GC_PR_BGD), 0, 1))
     

@@ -1,0 +1,200 @@
+{
+    "cassette_player_val.jpg": [
+        [
+            "0.45",
+            "cassette player"
+        ],
+        [
+            "0.30",
+            "tape player"
+        ],
+        [
+            "0.12",
+            "CD player"
+        ],
+        [
+            "0.10",
+            "radio"
+        ],
+        [
+            "0.02",
+            "speaker"
+        ]
+    ],
+    "chain_saw_val.jpg": [
+        [
+            "1.00",
+            "chainsaw"
+        ],
+        [
+            "0.00",
+            "power drill"
+        ],
+        [
+            "0.00",
+            "muzzle"
+        ],
+        [
+            "0.00",
+            "lawn mower"
+        ],
+        [
+            "0.00",
+            "ladybug"
+        ]
+    ],
+    "church_val.jpg": [
+        [
+            "0.79",
+            "church"
+        ],
+        [
+            "0.14",
+            "lighthouse"
+        ],
+        [
+            "0.04",
+            "monastery"
+        ],
+        [
+            "0.01",
+            "castle"
+        ],
+        [
+            "0.01",
+            "bell-cot"
+        ]
+    ],
+    "English_springer_val.jpg": [
+        [
+            "0.93",
+            "English Springer Spaniel"
+        ],
+        [
+            "0.02",
+            "Welsh Springer Spaniel"
+        ],
+        [
+            "0.02",
+            "Brittany"
+        ],
+        [
+            "0.01",
+            "Border Collie"
+        ],
+        [
+            "0.01",
+            "Clumber Spaniel"
+        ]
+    ],
+    "French_horn_val.jpg": [
+        [
+            "0.87",
+            "hamster"
+        ],
+        [
+            "0.06",
+            "mousetrap"
+        ],
+        [
+            "0.02",
+            "black-footed ferret"
+        ],
+        [
+            "0.02",
+            "weasel"
+        ],
+        [
+            "0.01",
+            "guinea pig"
+        ]
+    ],
+    "garbage_truck_val.jpg": [
+        [
+            "1.00",
+            "garbage truck"
+        ],
+        [
+            "0.00",
+            "moving van"
+        ],
+        [
+            "0.00",
+            "police van"
+        ],
+        [
+            "0.00",
+            "tow truck"
+        ],
+        [
+            "0.00",
+            "semi-trailer truck"
+        ]
+    ],
+    "gas_pump_val.jpg": [
+        [
+            "1.00",
+            "gas pump"
+        ],
+        [
+            "0.00",
+            "mailbox"
+        ],
+        [
+            "0.00",
+            "payphone"
+        ],
+        [
+            "0.00",
+            "parking meter"
+        ],
+        [
+            "0.00",
+            "waste container"
+        ]
+    ],
+    "golf_ball_val.jpg": [
+        [
+            "1.00",
+            "golf ball"
+        ],
+        [
+            "0.00",
+            "baseball"
+        ],
+        [
+            "0.00",
+            "ping-pong ball"
+        ],
+        [
+            "0.00",
+            "soccer ball"
+        ],
+        [
+            "0.00",
+            "rugby ball"
+        ]
+    ],
+    "parachute_val.jpg": [
+        [
+            "1.00",
+            "parachute"
+        ],
+        [
+            "0.00",
+            "balloon"
+        ],
+        [
+            "0.00",
+            "airship"
+        ],
+        [
+            "0.00",
+            "umbrella"
+        ],
+        [
+            "0.00",
+            "flamingo"
+        ]
+    ]
+}
