@@ -1,0 +1,442 @@
+{
+    "boat.jpg": [
+        [
+            "0.9990",
+            "container ship"
+        ],
+        [
+            "0.0004",
+            "drilling rig"
+        ],
+        [
+            "0.0002",
+            "pirate ship"
+        ],
+        [
+            "0.0001",
+            "lifeboat"
+        ],
+        [
+            "0.0001",
+            "submarine"
+        ]
+    ],
+    "boats_birds.jpg": [
+        [
+            "0.2926",
+            "lifeboat"
+        ],
+        [
+            "0.1287",
+            "amphibious vehicle"
+        ],
+        [
+            "0.1111",
+            "pirate ship"
+        ],
+        [
+            "0.0693",
+            "ocean liner"
+        ],
+        [
+            "0.0586",
+            "dock"
+        ]
+    ],
+    "car.jpg": [
+        [
+            "0.7237",
+            "jeep"
+        ],
+        [
+            "0.0812",
+            "tow truck"
+        ],
+        [
+            "0.0648",
+            "harvester"
+        ],
+        [
+            "0.0248",
+            "tractor"
+        ],
+        [
+            "0.0236",
+            "pickup truck"
+        ]
+    ],
+    "cars_trucks_highway.jpg": [
+        [
+            "0.2882",
+            "moving van"
+        ],
+        [
+            "0.1632",
+            "recreational vehicle"
+        ],
+        [
+            "0.1021",
+            "semi-trailer truck"
+        ],
+        [
+            "0.0580",
+            "tow truck"
+        ],
+        [
+            "0.0495",
+            "minibus"
+        ]
+    ],
+    "cassette_player.jpg": [
+        [
+            "0.5616",
+            "cassette player"
+        ],
+        [
+            "0.2888",
+            "tape player"
+        ],
+        [
+            "0.0511",
+            "radio"
+        ],
+        [
+            "0.0303",
+            "reflex camera"
+        ],
+        [
+            "0.0144",
+            "speaker"
+        ]
+    ],
+    "cat.jpg": [
+        [
+            "0.4456",
+            "tiger cat"
+        ],
+        [
+            "0.2526",
+            "Egyptian Mau"
+        ],
+        [
+            "0.1123",
+            "tabby cat"
+        ],
+        [
+            "0.0585",
+            "lynx"
+        ],
+        [
+            "0.0425",
+            "weasel"
+        ]
+    ],
+    "chain_saw.jpg": [
+        [
+            "0.7166",
+            "chainsaw"
+        ],
+        [
+            "0.1222",
+            "lawn mower"
+        ],
+        [
+            "0.0190",
+            "snowplow"
+        ],
+        [
+            "0.0149",
+            "motorboat"
+        ],
+        [
+            "0.0112",
+            "lifeboat"
+        ]
+    ],
+    "church.jpg": [
+        [
+            "0.7109",
+            "church"
+        ],
+        [
+            "0.1279",
+            "lighthouse"
+        ],
+        [
+            "0.0995",
+            "monastery"
+        ],
+        [
+            "0.0252",
+            "bell-cot"
+        ],
+        [
+            "0.0181",
+            "mosque"
+        ]
+    ],
+    "dog_bicycle.jpg": [
+        [
+            "0.6440",
+            "mountain bike"
+        ],
+        [
+            "0.1390",
+            "tricycle"
+        ],
+        [
+            "0.1065",
+            "unicycle"
+        ],
+        [
+            "0.0473",
+            "moped"
+        ],
+        [
+            "0.0463",
+            "tandem bicycle"
+        ]
+    ],
+    "dog_car.jpg": [
+        [
+            "0.3004",
+            "Papillon"
+        ],
+        [
+            "0.2430",
+            "Shetland Sheepdog"
+        ],
+        [
+            "0.1987",
+            "Alaskan Malamute"
+        ],
+        [
+            "0.0685",
+            "collie"
+        ],
+        [
+            "0.0579",
+            "husky"
+        ]
+    ],
+    "dog_cat.jpg": [
+        [
+            "0.3529",
+            "Chow Chow"
+        ],
+        [
+            "0.1777",
+            "lynx"
+        ],
+        [
+            "0.0436",
+            "tiger cat"
+        ],
+        [
+            "0.0294",
+            "Soft-coated Wheaten Terrier"
+        ],
+        [
+            "0.0271",
+            "Pomeranian"
+        ]
+    ],
+    "dog_moped.jpg": [
+        [
+            "0.2647",
+            "muzzle"
+        ],
+        [
+            "0.1736",
+            "moped"
+        ],
+        [
+            "0.0790",
+            "tricycle"
+        ],
+        [
+            "0.0535",
+            "ox"
+        ],
+        [
+            "0.0457",
+            "wheelbarrow"
+        ]
+    ],
+    "donkey_dog_cat_rooster.jpg": [
+        [
+            "0.3376",
+            "gazelle"
+        ],
+        [
+            "0.3338",
+            "impala"
+        ],
+        [
+            "0.0416",
+            "Alpine ibex"
+        ],
+        [
+            "0.0388",
+            "hartebeest"
+        ],
+        [
+            "0.0378",
+            "African wild dog"
+        ]
+    ],
+    "English_springer.jpg": [
+        [
+            "0.8132",
+            "English Springer Spaniel"
+        ],
+        [
+            "0.1296",
+            "Brittany"
+        ],
+        [
+            "0.0250",
+            "Clumber Spaniel"
+        ],
+        [
+            "0.0210",
+            "Welsh Springer Spaniel"
+        ],
+        [
+            "0.0040",
+            "English Setter"
+        ]
+    ],
+    "French_horn.jpg": [
+        [
+            "0.9968",
+            "French horn"
+        ],
+        [
+            "0.0006",
+            "buckle"
+        ],
+        [
+            "0.0004",
+            "cornet"
+        ],
+        [
+            "0.0004",
+            "coil"
+        ],
+        [
+            "0.0002",
+            "trombone"
+        ]
+    ],
+    "garbage_truck.jpg": [
+        [
+            "0.9885",
+            "garbage truck"
+        ],
+        [
+            "0.0058",
+            "semi-trailer truck"
+        ],
+        [
+            "0.0026",
+            "tow truck"
+        ],
+        [
+            "0.0023",
+            "moving van"
+        ],
+        [
+            "0.0002",
+            "snowplow"
+        ]
+    ],
+    "gas_pump.jpg": [
+        [
+            "0.9218",
+            "gas pump"
+        ],
+        [
+            "0.0266",
+            "mailbox"
+        ],
+        [
+            "0.0104",
+            "payphone"
+        ],
+        [
+            "0.0074",
+            "movie theater"
+        ],
+        [
+            "0.0066",
+            "turnstile"
+        ]
+    ],
+    "golf_ball.jpg": [
+        [
+            "0.9637",
+            "golf ball"
+        ],
+        [
+            "0.0241",
+            "baseball"
+        ],
+        [
+            "0.0083",
+            "rugby ball"
+        ],
+        [
+            "0.0021",
+            "soccer ball"
+        ],
+        [
+            "0.0005",
+            "tennis ball"
+        ]
+    ],
+    "parachute.jpg": [
+        [
+            "0.9985",
+            "parachute"
+        ],
+        [
+            "0.0006",
+            "balloon"
+        ],
+        [
+            "0.0005",
+            "airship"
+        ],
+        [
+            "0.0002",
+            "flagpole"
+        ],
+        [
+            "0.0000",
+            "great egret"
+        ]
+    ],
+    "tench.jpg": [
+        [
+            "0.9382",
+            "tench"
+        ],
+        [
+            "0.0402",
+            "axolotl"
+        ],
+        [
+            "0.0060",
+            "snoek"
+        ],
+        [
+            "0.0052",
+            "platypus"
+        ],
+        [
+            "0.0020",
+            "garfish"
+        ]
+    ]
+}

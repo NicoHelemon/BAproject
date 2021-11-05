@@ -1,0 +1,46 @@
+{
+    "boat.jpg": [
+        [
+            "1.00",
+            "container ship"
+        ],
+        [
+            "0.00",
+            "dock"
+        ],
+        [
+            "0.00",
+            "fireboat"
+        ],
+        [
+            "0.00",
+            "drilling rig"
+        ],
+        [
+            "0.00",
+            "ocean liner"
+        ]
+    ],
+    "cat.jpg": [
+        [
+            "0.24",
+            "tiger cat"
+        ],
+        [
+            "0.22",
+            "ring-tailed lemur"
+        ],
+        [
+            "0.17",
+            "tabby cat"
+        ],
+        [
+            "0.08",
+            "Egyptian Mau"
+        ],
+        [
+            "0.07",
+            "lynx"
+        ]
+    ]
+}

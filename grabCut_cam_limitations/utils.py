@@ -1,5 +1,9 @@
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
+import os
+import json
+from PIL import Image
 
 # Let's denote the horizontal axis by X and the vertical axis by Y.
 # There are two image formats, namely (X, Y) or (Y, X).
@@ -15,9 +19,22 @@ import cv2
 #   vertical deltas : (topL_x, topL_y, delta_x, delta_y)
 # We have the relation (botR_x, botR_y) = (topL_x, topL_y) + (delta_x, delta_y)
 
+def resize_target_height(image, target_height = 500):
+    height, width = image.shape[:2]
+    
+    dim = (int(width * target_height/height), target_height)
+    
+    return cv2.resize(image, dim)
 
-def boolarrayToImg(a):
-    return a.astype("uint8") * 255
+def resize_target_area(image, target_area = 250000):
+    height, width = image.shape[:2]
+    area = height * width
+    
+    factor = np.sqrt(target_area / area)
+    
+    dim = (int(width * factor), int(height * factor))
+    
+    return cv2.resize(image, dim)
 
 # IN    deltaRec: (X, Y) ; CΔ
 # OUT   cornerRec: (X, Y) ; CC
@@ -79,6 +96,7 @@ def grabCut(image, mask, mode = 'RECT'):
         mode=cv2.GC_INIT_WITH_RECT)
      
     elif mode == 'MASK':
+        mask = mask.copy()
         mask, _, _ = cv2.grabCut(
         image, 
         mask, 
@@ -88,6 +106,50 @@ def grabCut(image, mask, mode = 'RECT'):
         iterCount=10, 
         mode=cv2.GC_INIT_WITH_MASK)
     
-    outputMask = boolarrayToImg(np.where((mask == cv2.GC_BGD) | (mask == cv2.GC_PR_BGD), 0, 1))
+    binaryMask = maskToGrayImage(mask, nuance = False)
     
-    return mask, outputMask
+    return mask, binaryMask
+
+def maskToGrayImage(mask, nuance = True):
+    mask = mask.astype('uint8')
+    if not nuance:
+        mask = mask % 2 # merge probable and definite values together
+    mask[mask == 0] = 0    # definite background
+    mask[mask == 1] = 255  # definite foreground
+    mask[mask == 2] = 85   # probable background
+    mask[mask == 3] = 170  # probable foreground
+    return mask
+
+def cv2Show(image, title = 'title'):
+    cv2.imshow(title, image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+def pltShow(image, mode = 'color'):
+    if mode == 'color':
+        plt.imshow(cv2.cvtColor(image.astype('uint8'), cv2.COLOR_BGR2RGB))
+        plt.show()
+    if mode == 'gray' or mode == 'grey':
+        plt.imshow(image.astype('uint8'), cmap='gray', vmin=0, vmax=255)
+        plt.show()
+        
+def load(input_directory, images_name = None, with_bboxes = True):
+    if images_name == None:
+        images_name = []
+        for name in os.listdir(input_directory):
+            if name.endswith(".jpg"):
+                images_name.append(name)
+
+    images_cv2 = {}
+    for name in images_name:
+        images_cv2[name] = cv2.imread(input_directory + name)
+        
+    images_pil = {}
+    for name in images_name:
+        images_pil[name] = Image.open(input_directory + name)
+
+    bboxes = None
+    if with_bboxes:
+        bboxes = json.loads(open(input_directory + "images_bboxes.json", "r").read())
+    
+    return images_name, images_cv2, images_pil, bboxes
