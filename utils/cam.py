@@ -6,10 +6,13 @@ from torchvision import models, transforms
 
 import numpy as np
 import cv2
+import os
 
 import utils.json as json
+import utils.path as path
 
-json_path = r'C:\Users\Nicol\Documents\EPFL\BA7\Project\Code\voc\json\\'
+cam_dir = os.path.dirname(os.path.realpath(__file__))
+json_path = path.goback_from_current_dir(1, cam_dir) + 'json\\'
 
 # https://sebastianraschka.com/faq/docs/fc-to-conv.html
 def conv1x1_from_lin(weight, bias):
