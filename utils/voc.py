@@ -20,9 +20,7 @@ def xnor(mask1, mask2):
 
 # TP / (TP + FP + FN)
 def IoU(true, pred, sgm):
-    undef = np.where(sgm == 255, 1, 0)
-
-    true, pred, undef = true.astype(bool), pred.astype(bool), undef
+    undef = np.where(sgm == 255, 1, 0).astype(bool)
 
     TP       = diff(true & pred, undef).sum()
     TP_FP_FN = diff(true | pred, undef).sum()

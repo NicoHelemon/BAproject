@@ -100,8 +100,8 @@ class Cam:
         logit, cams = self.feed_img(img)
 
         h_x = F.softmax(logit, dim = 1).data.squeeze()
-        probs, idx = h_x.sort(0, True)
-        probs, idx = probs.numpy(), idx.numpy()
+        _, idx = h_x.sort(0, True)
+        idx = idx.numpy()
 
         i = 0
         c = self.classes[idx[i]]
@@ -110,15 +110,6 @@ class Cam:
             c = self.classes[idx[i]]
 
         return cams[0][idx[i]].detach().numpy()
-
-
-def img1c_to_4bins(x, a, b, c):
-    # BGD |a| PR_BGD |b| PR_FGD |c| FGD
-
-    if   x <= a:              return 0
-    elif (a < x) & (x <= b): return 2
-    elif (b < x) & (x <= c): return 3
-    elif c <= x:             return 1
 
 def cam_process(img, cam, size_upsample = (256, 256)):
     cam = cam - np.min(cam)
@@ -135,7 +126,9 @@ def anchoring_fgd(mask, coord):
     return mask
 
 def cam_to_gcmask(cam, a = 0.0, b = 0.2, c = 1.0):
+    # BGD, 0 |a| PR_BGD, 2 |b| PR_FGD, 3 |c| FGD, 1
     max_coord = np.unravel_index(cam.argmax(), cam.shape)
 
-    mask = np.vectorize(img1c_to_4bins)(cam, a, b, c).astype('uint8')
-    return anchoring_fgd(mask, max_coord)
+    mask = np.digitize(cam, np.array([a, b, c]), right = True)
+    mask = (2*mask - mask//2) % 4 # maps [0, 1, 2, 3] to [0, 2, 3, 1]
+    return anchoring_fgd(mask, max_coord).astype('uint8')
