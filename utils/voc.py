@@ -22,6 +22,8 @@ def xnor(mask1, mask2):
 def IoU(true, pred, sgm):
     undef = np.where(sgm == 255, 1, 0)
 
+    true, pred, undef = true.astype(bool), pred.astype(bool), undef
+
     TP       = diff(true & pred, undef).sum()
     TP_FP_FN = diff(true | pred, undef).sum()
 
@@ -29,12 +31,12 @@ def IoU(true, pred, sgm):
 
 # TP + TN / (TP + TN + FP + FN)
 def accuracy(true, pred, sgm):
-    undef = np.where(sgm == 255, 1, 0)
+    undef = np.where(sgm == 255, 1, 0).astype(bool)
 
-    TP_TN        = diff(xnor(true, pred), undef).sum()
-    TP_T_N_FP_FN = diff(true | ~true, undef).sum()
+    TP_TN       = diff(xnor(true, pred), undef).sum()
+    TP_TN_FP_FN = diff(true | ~true, undef).sum()
 
-    return TP_TN / TP_T_N_FP_FN
+    return TP_TN / TP_TN_FP_FN
 
 def time_str(t, shift = 3):
     return str(int(t // 60)).rjust(shift) + "m" + str(int(t % 60)).zfill(2) + "s"
