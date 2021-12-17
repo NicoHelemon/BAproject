@@ -1,0 +1,8 @@
+Task: Class segmentation
+Threshold = 0.5
+Images  2913
+Classes 4318
+mIoU of cam         = 0.205
+mIoU of grabcut-cam = 0.325
+mAccuracy of cam         = 0.815
+mAccuracy of grabcut-cam = 0.802
