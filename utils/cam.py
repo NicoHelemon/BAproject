@@ -120,15 +120,24 @@ def cam_process(img, cam, size_upsample = (256, 256)):
 
     return cam
 
+def heat_map(img, cam):
+    height, width, _ = img.shape
+    heatmap = cv2.applyColorMap(cv2.resize(np.uint8(255 * cam), (width, height)), cv2.COLORMAP_JET)
+    return heatmap * 0.3 + img * 0.5
+
 def anchoring_fgd(mask, coord):
     if mask[coord] % 2 == 0:
         mask[coord] = 1
     return mask
 
-def cam_to_gcmask(cam, a = 0.0, b = 0.2, c = 1.0):
-    # BGD, 0 |a| PR_BGD, 2 |b| PR_FGD, 3 |c| FGD, 1
+def cam_to_gcmask(cam, threshold, bin = False):
+    # BGD, 0 |0| PR_BGD, 2 |threshold| PR_FGD, 3 |1| FGD, 1
     max_coord = np.unravel_index(cam.argmax(), cam.shape)
 
-    mask = np.digitize(cam, np.array([a, b, c]), right = True)
+    mask = np.digitize(cam, np.array([0.0, threshold, 1.0]), right = True)
     mask = (2*mask - mask//2) % 4 # maps [0, 1, 2, 3] to [0, 2, 3, 1]
-    return anchoring_fgd(mask, max_coord).astype('uint8')
+    mask = anchoring_fgd(mask, max_coord).astype('uint8')
+    if bin:
+        return (mask % 2).astype(bool)
+    else:
+        return mask
