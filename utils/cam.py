@@ -74,10 +74,13 @@ PREPROCESS = transforms.Compose([
    mean = [0.485, 0.456, 0.406],
    std =  [0.229, 0.224, 0.225])])
 
+NET_CLASSES        = json.open_json(json_path + 'imagenet-classes')
+NET_SIMPLE_CLASSES = json.open_json(json_path + 'imagenet-simple-classes')
+VOC_CLASSES        = json.open_json(json_path + 'voc-classes')
+VOC_TO_NET         = json.open_json(json_path + 'voc-to-imagenet-classes')
+
 class Cam:
     def __init__(self, model = 'squeezenet11'):
-        self.classes = json.open_json(json_path + 'imagenet-classes')
-        self.voc_to_imagenet = json.open_json(json_path + 'voc-to-imagenet-classes')
         self.net = CamExtension(model = model)
         self.net.eval()
 
@@ -85,31 +88,44 @@ class Cam:
         logit, cams = self.net(Variable(PREPROCESS(img).unsqueeze(0)))
         return logit, cams
 
-    #def get(self, img, img_class):
-    #    _, cams = self.feed_img(img)
+    # Returns the top1 class and associated probability and CAM
+    def get_top1(self, img):
+        logit, cams = self.feed_img(img)
 
-    #    return cams[0][self.classes.index(img_class)].detach().numpy()
+        h_x = F.softmax(logit, dim = 1).data.squeeze()
+        probs, idx = h_x.sort(0, True)
+        idx = idx.numpy()
 
-    #def get_super(self, img, img_super_classes):
-    #    cams = [self.get(img, c) for c in img_super_classes]
-    #    return np.mean(cams, axis = 0)
+        simple_class = NET_SIMPLE_CLASSES[idx[0]]
+        proba        = probs.numpy()[0]
+        cam          = cam_process(img, cams[0][idx[0]].detach().numpy())
 
-    def get_top(self, img, voc_class):
-        imagenet_classes = self.voc_to_imagenet[voc_class]
+        return simple_class, proba, cam
+
+
+    # Given a VOC class, search for the best associated 
+    # (according to the VOC-Imagenet mapping) Imagenet class.
+    # Returns the Imagenet class and associated, ranking (top n class), probability and CAM
+    def get_top_voc_to_imagenet(self, img, voc_class):
+        associated_imagenet_classes = VOC_TO_NET[voc_class]
 
         logit, cams = self.feed_img(img)
 
         h_x = F.softmax(logit, dim = 1).data.squeeze()
-        _, idx = h_x.sort(0, True)
+        probs, idx = h_x.sort(0, True)
         idx = idx.numpy()
 
         i = 0
-        c = self.classes[idx[i]]
-        while c not in imagenet_classes:
+        c = NET_CLASSES[idx[i]]
+        while c not in associated_imagenet_classes:
             i += 1
-            c = self.classes[idx[i]]
+            c = NET_CLASSES[idx[i]]
 
-        return cams[0][idx[i]].detach().numpy()
+        simple_class = NET_SIMPLE_CLASSES[NET_CLASSES.index(c)]
+        rank_proba   = ((i+1), probs.numpy()[i])
+        cam          = cam_process(img, cams[0][idx[0]].detach().numpy())
+
+        return simple_class, rank_proba, cam
 
 def cam_process(img, cam, size_upsample = (256, 256)):
     cam = cam - np.min(cam)
@@ -120,24 +136,20 @@ def cam_process(img, cam, size_upsample = (256, 256)):
 
     return cam
 
-def heat_map(img, cam):
-    height, width, _ = img.shape
+def heat_map(img_cv2, cam, heat_f = 0.3, img_f = 0.5):
+    height, width, _ = img_cv2.shape
     heatmap = cv2.applyColorMap(cv2.resize(np.uint8(255 * cam), (width, height)), cv2.COLORMAP_JET)
-    return heatmap * 0.3 + img * 0.5
 
-def anchoring_fgd(mask, coord):
-    if mask[coord] % 2 == 0:
-        mask[coord] = 1
-    return mask
+    return heatmap * heat_f + img_cv2 * img_f
 
-def cam_to_gcmask(cam, threshold, bin = False):
-    # BGD, 0 |0| PR_BGD, 2 |threshold| PR_FGD, 3 |1| FGD, 1
+def cam_to_gcmask(cam, t0, t1, t2):
+    # BGD, 0  ||t0||  PR_BGD, 2  ||t1||  PR_FGD, 3  ||t2||  FGD, 1
     max_coord = np.unravel_index(cam.argmax(), cam.shape)
 
-    mask = np.digitize(cam, np.array([0.0, threshold, 1.0]), right = True)
+    mask = np.digitize(cam, np.array([t0, t1, t2]), right = True)
     mask = (2*mask - mask//2) % 4 # maps [0, 1, 2, 3] to [0, 2, 3, 1]
-    mask = anchoring_fgd(mask, max_coord).astype('uint8')
-    if bin:
-        return (mask % 2).astype(bool)
-    else:
-        return mask
+
+    if mask[max_coord] % 2 == 0:
+        mask[max_coord] = 1       # We should ensure that there at least on FGD pixel for anchoring
+
+    return mask.astype('uint8')

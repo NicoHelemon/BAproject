@@ -17,27 +17,18 @@ def grabcut(img, mask, iterCount = 1, mode = 'RECT'):
     elif mode == 'MASK':
         mask, _, _ = cv2.grabCut(
         img, 
-        mask, 
+        mask.copy(), 
         None, 
         np.zeros((1, 65), dtype="float"),
         np.zeros((1, 65), dtype="float"), 
         iterCount = iterCount,
         mode = cv2.GC_INIT_WITH_MASK)
-
-    quaternary_mask3 = mask                                 # [0, 1, 2, 3]
-
-    binary_mask255 = gcmask_to_grayimg(mask, mode = '2ary') # [0, 255]
-
-    binary_mask1 = mask.astype('uint8') % 2                 # [0, 1]
     
-    return quaternary_mask3, binary_mask255, binary_mask1
+    return mask.astype('uint8')
 
 
-def gcmask_to_grayimg(mask, mode = '4ary'):
+def gcmask_to_grayimg(mask):
     mask = mask.astype('uint8')
-
-    if mode == '2ary':
-        mask = mask % 2 # merge probable and definite values together
 
     mask[mask == 0] = 0    # definite background
     mask[mask == 1] = 255  # definite foreground

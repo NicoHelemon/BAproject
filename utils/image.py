@@ -35,8 +35,8 @@ def draw_cbbox(img, cbbox, color = (255, 0, 0), thickness = 2):
     max = cbbox[2:]
     return cv2.rectangle(img.copy(), min, max, color, thickness)
 
-def cbbox_mask(img, cbbox):
-    mask = np.zeros(img.shape[:2])
+def cbbox_mask(img_shape, cbbox):
+    mask = np.zeros(img_shape)
     xmin, ymin, xmax, ymax = cbbox
     mask[ymin:ymax, xmin:xmax] = 1
 
@@ -45,6 +45,16 @@ def cbbox_mask(img, cbbox):
 def bitwise_and(img, mask):
     img = img.copy()
     return cv2.bitwise_and(img, img, mask = mask)
+
+def bmasks_IU_visu(mask1, mask2, c1 = (255, 127, 127), c2 = (127, 255, 127)):
+    mask1, mask2 = mask1.astype(bool), mask2.astype(bool)
+    x, y = mask1.shape
+    visu = np.zeros((x, y, 3))
+    visu[mask1 & ~ mask2] = np.array(c1)
+    visu[mask1 & mask2]   = np.minimum(c1, c2)
+    visu[mask2 & ~ mask1] = np.array(c2)
+    return visu
+
 
 def show(img, mode = 'color'):
     if mode == 'color':
