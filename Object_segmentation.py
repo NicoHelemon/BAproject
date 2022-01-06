@@ -21,7 +21,7 @@ root_path   = path.goback_from_current_dir(0)
 json_path   = root_path + 'json\\'
 output_path = root_path + 'output\\'
 
-Path(output_path).mkdir(parents = True, exist_ok = True)
+Path(output_path).mkdir(parents = true_sgm, exist_ok = true_sgm)
 
 # SETUP
 
@@ -59,37 +59,30 @@ for i in range(N):
     gc.collect()
     start = timeit.default_timer()
     
-    img, sgm = next(data)
-    img, sgm = torch.squeeze(img), torch.squeeze(sgm)
-
-    img_pil  = img
-    img_cv2  = im.pil_to_cv2(img.numpy())
-    sgm      = im.f1_to_f255(sgm.numpy())
-    undef    = np.where(sgm == 255, 1, 0).astype(bool)
-    
-    name, annots = next(annotations)
+    img, true_sgms, undef = im.process(next(data))
+    _, annots = next(annotations)
 
     for l, annot in enumerate(annots):
-        true = m.true_mask(sgm, l + 1)
+        true_sgm = m.true_mask(true_sgms, l + 1)
 
         c, _, cbbox = annot
         k = classes.index(c)
 
-        #pred0 = sg.sgm_grabcut(img_cv2, cbbox)
-        #measures[0][0][k] = np.add(measures[0][0][k], m.TP_FN_FP_TN(true, pred0, undef))
+        #pred0 = sg.sgm_grabcut(img, cbbox)
+        #measures[0][0][k] = np.add(measures[0][0][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
 
-        _, _, img_cam = camnet.get_top_voc_to_imagenet(img_pil, c)
+        _, _, img_cam = camnet.get_top_voc_to_imagenet(img, c)
         img_cam = im.bitwise_and(img_cam, im.cbbox_mask(img_cam.shape[:2], cbbox))
 
         for j, t in enumerate(thresholds):
 
-            #pred1 = sg.sgm_grabcut_cam(img_cv2, img_cam, t, mode = 'PF_PB', cbbox = cbbox)
-            pred2 = sg.sgm_grabcut_cam(img_cv2, img_cam, t, mode = 'F_PF', cbbox = cbbox)
-            pred3 = sg.sgm_grabcut_cam(img_cv2, img_cam, t, mode = 'F_PB', cbbox = cbbox)
+            #pred1 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'PF_PB', cbbox = cbbox)
+            pred2 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PF', cbbox = cbbox)
+            pred3 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PB', cbbox = cbbox)
         
-            #measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true, pred1, undef))
-            measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true, pred2, undef))
-            measures[3][j][k] = np.add(measures[3][j][k], m.TP_FN_FP_TN(true, pred3, undef))
+            #measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
+            measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true_sgm, pred2, undef))
+            measures[3][j][k] = np.add(measures[3][j][k], m.TP_FN_FP_TN(true_sgm, pred3, undef))
         
     stop = timeit.default_timer()
     time.append(stop - start)

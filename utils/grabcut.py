@@ -1,13 +1,15 @@
 import cv2
 import numpy as np
+import utils.image as im
 
-def grabcut(img, mask, iterCount = 1, mode = 'RECT'):
+def grabcut(img_pil, mask, iterCount = 1, mode = 'RECT'):
     cv2.setRNGSeed(0)
+    img_cv2 = im.pil_to_cv2(img_pil)
     
     if mode == 'RECT':
         mask, _, _ = cv2.grabCut(
-        img, 
-        np.zeros(img.shape[:2], dtype="uint8"), 
+        img_cv2, 
+        np.zeros(img_cv2.shape[:2], dtype="uint8"), 
         mask, 
         np.zeros((1, 65), dtype="float"),
         np.zeros((1, 65), dtype="float"), 
@@ -16,7 +18,7 @@ def grabcut(img, mask, iterCount = 1, mode = 'RECT'):
      
     elif mode == 'MASK':
         mask, _, _ = cv2.grabCut(
-        img, 
+        img_cv2, 
         mask.copy(), 
         None, 
         np.zeros((1, 65), dtype="float"),

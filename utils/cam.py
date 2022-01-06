@@ -10,6 +10,7 @@ import os
 
 import utils.json as json
 import utils.path as path
+import utils.image as im
 
 cam_dir = os.path.dirname(os.path.realpath(__file__))
 json_path = path.goback_from_current_dir(1, cam_dir) + 'json\\'
@@ -123,7 +124,7 @@ class Cam:
 
         simple_class = NET_SIMPLE_CLASSES[NET_CLASSES.index(c)]
         rank_proba   = ((i+1), probs.numpy()[i])
-        cam          = cam_process(img, cams[0][idx[0]].detach().numpy())
+        cam          = cam_process(img, cams[0][idx[i]].detach().numpy())
 
         return simple_class, rank_proba, cam
 
@@ -140,7 +141,7 @@ def heat_map(img_cv2, cam, heat_f = 0.3, img_f = 0.5):
     height, width, _ = img_cv2.shape
     heatmap = cv2.applyColorMap(cv2.resize(np.uint8(255 * cam), (width, height)), cv2.COLORMAP_JET)
 
-    return heatmap * heat_f + img_cv2 * img_f
+    return im.rgb_swap_bgr(heatmap * heat_f + img_cv2 * img_f)
 
 def cam_to_gcmask(cam, t0, t1, t2):
     # BGD, 0  ||t0||  PR_BGD, 2  ||t1||  PR_FGD, 3  ||t2||  FGD, 1

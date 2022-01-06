@@ -11,7 +11,7 @@ import utils.cam as cam
 import utils.metrics as m
 import utils.json as json
 import utils.path as path
-import utils.segmentation as sg
+import utils.segmentation as sgm
 from utils.VOCSegmentation import VOCSegmentation
 
 
@@ -59,26 +59,20 @@ for i in range(N):
     gc.collect()
     start = timeit.default_timer()
     
-    img, true_sgms = next(data)
-    img, true_sgms = torch.squeeze(img), torch.squeeze(true_sgms)
-
-    img_pil   = img
-    img_cv2   = im.pil_to_cv2(img.numpy())
-    true_sgms = im.f1_to_f255(true_sgms.numpy())
-    undef     = np.where(true_sgms == 255, 1, 0).astype(bool)
+    img, true_sgms, undef = im.process(next(data))
     
-    name, annots = next(annotations)
+    _, annots = next(annotations)
 
     for c in annots:
         k = classes.index(c)
         true_sgm = m.true_mask(true_sgms, k + 1)
 
-        _, _, img_cam = camnet.get_top_voc_to_imagenet(img_pil, c)
+        _, _, img_cam = camnet.get_top_voc_to_imagenet(img, c)
 
         for j, t in enumerate(thresholds):
         
-            pred0 = sg.sgm_cam(img_cam, t)
-            pred1 = sg.sgm_grabcut_cam(img_cv2, img_cam, t)
+            pred0 = sgm.sgm_cam(img_cam, t)
+            pred1 = sgm.sgm_grabcut_cam(img, img_cam, t)
         
             measures[0][j][k] = np.add(measures[0][j][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
             measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
