@@ -4,7 +4,7 @@ def true_mask(sgm, i):
     return np.where(sgm == i, 1, 0).astype(bool)
 
 def TP_FN_FP_TN(true, pred, undef):
-    true = true & ~ undef
+    pred = pred & ~ undef
 
     TP = true & pred
     FN = true & ~ pred # true - pred

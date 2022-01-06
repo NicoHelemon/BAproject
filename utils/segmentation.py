@@ -1,6 +1,6 @@
-import grabcut as gcut
-import image as im
-import cam
+import utils.grabcut as gcut
+import utils.image as im
+import utils.cam as cam
 
 def sgm_grabcut(img_cv2, cbbox):
     pred = gcut.grabcut(img_cv2, im.corner_to_delta(cbbox), mode = 'RECT') % 2

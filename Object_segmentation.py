@@ -76,7 +76,7 @@ for i in range(N):
         k = classes.index(c)
 
         #pred0 = sg.sgm_grabcut(img_cv2, cbbox)
-        #measures[0][0][k] = np.add(measures[0][k], m.TP_FN_FP_TN(true, pred0, undef))
+        #measures[0][0][k] = np.add(measures[0][0][k], m.TP_FN_FP_TN(true, pred0, undef))
 
         _, _, img_cam = camnet.get_top_voc_to_imagenet(img_pil, c)
         img_cam = im.bitwise_and(img_cam, im.cbbox_mask(img_cam.shape[:2], cbbox))
@@ -87,9 +87,9 @@ for i in range(N):
             pred2 = sg.sgm_grabcut_cam(img_cv2, img_cam, t, mode = 'F_PF', cbbox = cbbox)
             pred3 = sg.sgm_grabcut_cam(img_cv2, img_cam, t, mode = 'F_PB', cbbox = cbbox)
         
-            #measures[1][j][k] = np.add(measures[j][k], m.TP_FN_FP_TN(true, pred1, undef))
-            measures[2][j][k] = np.add(measures[j][k], m.TP_FN_FP_TN(true, pred2, undef))
-            measures[3][j][k] = np.add(measures[j][k], m.TP_FN_FP_TN(true, pred3, undef))
+            #measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true, pred1, undef))
+            measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true, pred2, undef))
+            measures[3][j][k] = np.add(measures[3][j][k], m.TP_FN_FP_TN(true, pred3, undef))
         
     stop = timeit.default_timer()
     time.append(stop - start)

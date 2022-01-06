@@ -80,8 +80,8 @@ for i in range(N):
             pred0 = sg.sgm_cam(img_cam, t)
             pred1 = sg.sgm_grabcut_cam(img_cv2, img_cam, t)
         
-            measures[0][j][k] = np.add(measures[j][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
-            measures[1][j][k] = np.add(measures[j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
+            measures[0][j][k] = np.add(measures[0][j][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
+            measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
         
     stop = timeit.default_timer()
     time.append(stop - start)

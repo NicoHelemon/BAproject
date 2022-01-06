@@ -146,8 +146,10 @@ def cam_to_gcmask(cam, t0, t1, t2):
     # BGD, 0  ||t0||  PR_BGD, 2  ||t1||  PR_FGD, 3  ||t2||  FGD, 1
     max_coord = np.unravel_index(cam.argmax(), cam.shape)
 
+    # The point is to be efficient, thus the weird formula at line 2
+    # (A transformation with basic operations is better than manual case mapping)
     mask = np.digitize(cam, np.array([t0, t1, t2]), right = True)
-    mask = (2*mask - mask//2) % 4 # maps [0, 1, 2, 3] to [0, 2, 3, 1]
+    mask = (2*mask - mask//2) % 4 # maps [0, 1, 2, 3] to [0, 2, 3, 1].
 
     if mask[max_coord] % 2 == 0:
         mask[max_coord] = 1       # We should ensure that there at least on FGD pixel for anchoring
