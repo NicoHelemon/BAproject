@@ -11,7 +11,7 @@ import utils.cam as cam
 import utils.metrics as m
 import utils.json as json
 import utils.path as path
-import utils.segmentation as sg
+import utils.segmentation as sgm
 from utils.VOCSegmentation import VOCSegmentation
 
 
@@ -21,7 +21,7 @@ root_path   = path.goback_from_current_dir(0)
 json_path   = root_path + 'json\\'
 output_path = root_path + 'output\\'
 
-Path(output_path).mkdir(parents = true_sgm, exist_ok = true_sgm)
+Path(output_path).mkdir(parents = True, exist_ok = True)
 
 # SETUP
 
@@ -68,7 +68,7 @@ for i in range(N):
         c, _, cbbox = annot
         k = classes.index(c)
 
-        #pred0 = sg.sgm_grabcut(img, cbbox)
+        #pred0 = sgm.sgm_grabcut(img, cbbox)
         #measures[0][0][k] = np.add(measures[0][0][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
 
         _, _, img_cam = camnet.get_top_voc_to_imagenet(img, c)
@@ -76,9 +76,9 @@ for i in range(N):
 
         for j, t in enumerate(thresholds):
 
-            #pred1 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'PF_PB', cbbox = cbbox)
-            pred2 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PF', cbbox = cbbox)
-            pred3 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PB', cbbox = cbbox)
+            #pred1 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'PF_PB', cbbox = cbbox)
+            pred2 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PF', cbbox = cbbox)
+            pred3 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PB', cbbox = cbbox)
         
             #measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
             measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true_sgm, pred2, undef))

@@ -47,7 +47,7 @@ annotations = iter(annotations.items())
 classes    = json.open_json(json_path + "voc-classes")
 thresholds = (np.arange(1, 10) / 10).tolist()
 metrics    = ['TP', 'FN', 'FP', 'TN']
-techniques = ['cam', 'grabcutcam']
+techniques = ['cam', 'grabcutcam_PF_PB', 'grabcutcam_F_PF', 'grabcutcam_F_PB']
 
 measures = np.zeros((len(techniques), len(thresholds), len(classes), len(metrics)), dtype=int)
 
@@ -71,11 +71,15 @@ for i in range(N):
 
         for j, t in enumerate(thresholds):
         
-            pred0 = sgm.sgm_cam(img_cam, t)
-            pred1 = sgm.sgm_grabcut_cam(img, img_cam, t)
+            #pred0 = sgm.sgm_cam(img_cam, t)
+            #pred1 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'PF_PB', cbbox = cbbox)
+            pred2 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PF')
+            pred3 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PB')
         
-            measures[0][j][k] = np.add(measures[0][j][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
-            measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
+            #measures[0][j][k] = np.add(measures[0][j][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
+            #measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
+            measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true_sgm, pred2, undef))
+            measures[3][j][k] = np.add(measures[3][j][k], m.TP_FN_FP_TN(true_sgm, pred3, undef))
         
     stop = timeit.default_timer()
     time.append(stop - start)
@@ -98,5 +102,7 @@ def df_creation_saving(array, thresholds, name):
 
 # SAVING OUTPUT
 
-df_creation_saving(measures[0], thresholds, 'cam')
-df_creation_saving(measures[1], thresholds, 'grabcutcam')
+#df_creation_saving(measures[0], thresholds, 'cam')
+#df_creation_saving(measures[1], thresholds, 'grabcutcam_PF_PB')
+df_creation_saving(measures[2], thresholds, 'grabcutcam_F_PF')
+df_creation_saving(measures[3], thresholds, 'grabcutcam_F_PB')
