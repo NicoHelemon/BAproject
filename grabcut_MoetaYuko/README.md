@@ -1,3 +1,11 @@
+
+# MoetaYuko's README
+
+Source (https://github.com/MoetaYuko/GrabCut/blob/master/README.md)
+
+<details>
+  <summary>Spoiler warning</summary>
+
 # GrabCut
 
 My implementation of *[Grabcut: Interactive foreground extraction using iterated graph cuts, ACM SIGGRAPH 2004](https://cvg.ethz.ch/teaching/cvl/2012/grabcut-siggraph04.pdf)*, without border matting.
@@ -24,3 +32,5 @@ python grabcut.py <filename>
 ```
 
 If `filename` is not specified, the program will pick `messi5.jpg` to segment. For more details, please refer to instructions printed to the console after run the program.
+  
+</details>
