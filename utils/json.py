@@ -1,3 +1,5 @@
+# Contains json support functions.
+
 import json
 
 def save_json(name, array):

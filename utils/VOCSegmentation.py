@@ -1,3 +1,6 @@
+# Contains a personal extension of 
+# https://pytorch.org/vision/main/generated/torchvision.datasets.VOCSegmentation.html
+
 import os
 import tarfile
 from torchvision.datasets.vision import VisionDataset

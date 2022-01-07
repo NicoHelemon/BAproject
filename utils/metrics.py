@@ -1,3 +1,5 @@
+# Contains metrics definitions.
+
 import numpy as np
 
 def true_mask(sgm, i):

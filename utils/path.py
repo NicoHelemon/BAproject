@@ -1,3 +1,4 @@
+# Contains path support functions.
 
 import os
 

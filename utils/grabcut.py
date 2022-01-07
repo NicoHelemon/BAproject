@@ -1,3 +1,5 @@
+# Contains GrabCut related code.
+
 import cv2
 import numpy as np
 import utils.image as im

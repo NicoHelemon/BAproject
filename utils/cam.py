@@ -1,3 +1,6 @@
+# Contains Class Activation Map related code and CamExtension and Cam classes definitions.
+
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

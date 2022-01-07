@@ -1,3 +1,4 @@
+# Contains image support functions.
 
 import numpy as np
 import cv2

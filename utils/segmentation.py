@@ -1,3 +1,5 @@
+# Contains the segmentation techniques.
+
 import utils.grabcut as gcut
 import utils.image as im
 import utils.cam as cam
