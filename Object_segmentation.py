@@ -59,7 +59,7 @@ for i in range(N):
     gc.collect()
     start = timeit.default_timer()
     
-    img, true_sgms, undef = im.process(next(data))
+    img, true_sgms, undef = im.process(*next(data))
     _, annots = next(annotations)
 
     for l, annot in enumerate(annots):

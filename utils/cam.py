@@ -6,14 +6,13 @@ from torchvision import models, transforms
 
 import numpy as np
 import cv2
-import os
 
 import utils.json as json
 import utils.path as path
 import utils.image as im
 
-cam_dir = os.path.dirname(os.path.realpath(__file__))
-json_path = path.goback_from_current_dir(1, cam_dir) + 'json\\'
+root_path = path.goback_from_current_dir(1)
+json_path = root_path + 'json\\'
 
 # https://sebastianraschka.com/faq/docs/fc-to-conv.html
 def conv1x1_from_lin(weight, bias):
@@ -146,6 +145,7 @@ def heat_map(img_cv2, cam, heat_f = 0.3, img_f = 0.5):
 def cam_to_gcmask(cam, t0, t1, t2):
     # BGD, 0  ||t0||  PR_BGD, 2  ||t1||  PR_FGD, 3  ||t2||  FGD, 1
     max_coord = np.unravel_index(cam.argmax(), cam.shape)
+    min_coord = np.unravel_index(cam.argmin(), cam.shape)
 
     # The point is to be efficient, thus the weird formula at line 2
     # (A transformation with basic operations is better than manual case mapping)
@@ -154,5 +154,7 @@ def cam_to_gcmask(cam, t0, t1, t2):
 
     if mask[max_coord] % 2 == 0:
         mask[max_coord] = 1       # We should ensure that there at least on FGD pixel for anchoring
+    if mask[min_coord] % 2 == 1:
+        mask[min_coord] = 0       # We should ensure that there at least on BGD pixel for anchoring
 
     return mask.astype('uint8')

@@ -57,10 +57,10 @@ time = []
 
 for i in range(N):
     gc.collect()
+
     start = timeit.default_timer()
     
-    img, true_sgms, undef = im.process(next(data))
-    
+    img, true_sgms, undef = im.process(*next(data))
     _, annots = next(annotations)
 
     for c in annots:
@@ -73,12 +73,12 @@ for i in range(N):
         
             #pred0 = sgm.sgm_cam(img_cam, t)
             #pred1 = sg.sgm_grabcut_cam(img, img_cam, t, mode = 'PF_PB', cbbox = cbbox)
-            pred2 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PF')
+            #pred2 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PF')
             pred3 = sgm.sgm_grabcut_cam(img, img_cam, t, mode = 'F_PB')
         
             #measures[0][j][k] = np.add(measures[0][j][k], m.TP_FN_FP_TN(true_sgm, pred0, undef))
             #measures[1][j][k] = np.add(measures[1][j][k], m.TP_FN_FP_TN(true_sgm, pred1, undef))
-            measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true_sgm, pred2, undef))
+            #measures[2][j][k] = np.add(measures[2][j][k], m.TP_FN_FP_TN(true_sgm, pred2, undef))
             measures[3][j][k] = np.add(measures[3][j][k], m.TP_FN_FP_TN(true_sgm, pred3, undef))
         
     stop = timeit.default_timer()
@@ -104,5 +104,5 @@ def df_creation_saving(array, thresholds, name):
 
 #df_creation_saving(measures[0], thresholds, 'cam')
 #df_creation_saving(measures[1], thresholds, 'grabcutcam_PF_PB')
-df_creation_saving(measures[2], thresholds, 'grabcutcam_F_PF')
+#df_creation_saving(measures[2], thresholds, 'grabcutcam_F_PF')
 df_creation_saving(measures[3], thresholds, 'grabcutcam_F_PB')

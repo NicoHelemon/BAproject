@@ -48,10 +48,10 @@ def bitwise_and(img, mask):
     return cv2.bitwise_and(img, img, mask = mask)
 
 def show(img_cv2):
-    if  img_cv2.shape[2] == 3:
+    if  img_cv2.ndim == 3:
         plt.imshow(img_cv2.astype('uint8'))
         plt.show()
-    elif img_cv2.shape[2] == 1:
+    elif img_cv2.ndim == 2:
         plt.imshow(img_cv2.astype('uint8'), cmap='gray', vmin=0, vmax=255)
         plt.show()
 

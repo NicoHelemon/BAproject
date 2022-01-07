@@ -19,6 +19,7 @@ def sgm_grabcut_cam(img_pil, img_cam, t, mode = 'PF_PB', cbbox = None):
     elif mode == 'F_PB':
         t0, t1, t2 = 0.0, t, t + delta
  
+    # img_cam is expected to be already bbox-cropped (if bbox is not None)
     gcmask_cam = cam.cam_to_gcmask(img_cam, t0, t1, t2) 
     pred = gcut.grabcut(img_pil, gcmask_cam, mode = 'MASK') % 2
 
@@ -28,7 +29,7 @@ def sgm_grabcut_cam(img_pil, img_cam, t, mode = 'PF_PB', cbbox = None):
     return pred.astype(bool)
 
 def sgm_cam(img_cam, t):
-    pred  = cam.cam_to_gcmask(img_cam, t) % 2
+    pred  = cam.cam_to_gcmask(img_cam, 0.0, t, 1.0) % 2
 
     return pred.astype(bool)
 
