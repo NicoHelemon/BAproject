@@ -210,7 +210,8 @@ class V():
             img, true_sgms, _ = load(img_name, mode = 'Object')
             img_cv2 = im.pil_to_cv2(img)
             
-            print("=============================================================================")    
+            print("=============================================================================")
+            print(img_name)    
             display_save(img_name, [img_cv2], output_img_path = output_img_path)
             
             j = 0
@@ -288,10 +289,10 @@ class V():
             if j == -2:
                 return
 
-            clear = input("Type:\n - \"clear\" to clear the cell outputs \n - Anything else to keep them \n")
-            if clear == "clear":
-                clear_output(wait=True)  
-            print("")
+            #clear = input("Type:\n - \"clear\" to clear the cell outputs \n - Anything else to keep them \n")
+            #if clear == "clear":
+            #    clear_output(wait=True)  
+            #print("")
 
     def visu_class(self, view, classes, output_img_path, default_t):
         N = len(view) - 1
@@ -302,7 +303,8 @@ class V():
             img, true_sgms, _ = load(img_name, mode = 'Class')
             img_cv2 = im.pil_to_cv2(img)
             
-            print("=============================================================================")    
+            print("=============================================================================")
+            print(img_name)    
             display_save(img_name, [img_cv2], output_img_path = output_img_path)
             
             j = 0
@@ -326,7 +328,7 @@ class V():
                 print(f'Top imagenet class being associated to the given voc class \"{c}\":\n' +
                       f'   {pred_class_voc} with probability {prob_voc[1]:.4f} (top {prob_voc[0]})\n')
                 
-                display_save(f'{img_name}_{c}_true',
+                display_save(f'{img_name}_{c}_cam',
                             [cam.heat_map(img_cv2, img_cam)],
                             output_img_path = output_img_path)
                 display_save(f'{img_name}_{c}_true',
@@ -358,7 +360,7 @@ class V():
                     else:
                         
                         mode = {1: 'PF_PB', 2: 'F_PF', 3: 'F_PB'}
-                        display_save(f'{img_name}_{c}_true',
+                        display_save(f'{img_name}_{c}',
                                     *visu_grabcut_cam(img, true_sgm, img_cam, t, mode = mode[k]),
                                     output_img_path = output_img_path)
                         
@@ -377,8 +379,8 @@ class V():
             if j == -2:
                 return
 
-            clear = input("Type:\n - \"clear\" to clear the cell outputs \n - Anything else to keep them \n")
-            if clear == "clear":
-                clear_output(wait=True)
-            print("") 
+            #clear = input("Type:\n - \"clear\" to clear the cell outputs \n - Anything else to keep them \n")
+            #if clear == "clear":
+            #    clear_output(wait=True)
+            #print("") 
         
