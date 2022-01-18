@@ -36,6 +36,8 @@ Check `Visualization.ipynb` file in `visualization` directory.
 
 ## Utils
 
+Only important functions have "proper" docummentation (description, paramaters, returned objects)
+
 Main files:
 
 * `cam.py` - Contains Class Activation Map related code and CamExtension and Cam classes definitions.

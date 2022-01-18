@@ -60,12 +60,12 @@ for i in range(N):
     start = timeit.default_timer()
     
     img, true_sgms, undef = im.process(*next(data))
-    _, annots = next(annotations)
+    _, annots = next(annotations) # Get ground truth annotations of img
 
     for l, annot in enumerate(annots):
         true_sgm = m.true_mask(true_sgms, l + 1)
 
-        c, _, cbbox = annot
+        c, _, cbbox = annot # Get ground truth bbox and class
         k = classes.index(c)
 
         #pred0 = sgm.sgm_grabcut(img, cbbox)

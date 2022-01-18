@@ -61,7 +61,7 @@ for i in range(N):
     start = timeit.default_timer()
     
     img, true_sgms, undef = im.process(*next(data))
-    _, annots = next(annotations)
+    _, annots = next(annotations) # Get ground truth classes in img
 
     for c in annots:
         k = classes.index(c)

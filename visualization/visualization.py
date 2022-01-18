@@ -133,6 +133,7 @@ def browse(i, limit, browsed):
     return i
 
 def display_save(img_name, imgs, techs_names = [""], output_img_path = None):
+    print(img_name)
     for img, name in zip(imgs, techs_names):
         print(name)
         im.show(img)
@@ -210,8 +211,7 @@ class V():
             img, true_sgms, _ = load(img_name, mode = 'Object')
             img_cv2 = im.pil_to_cv2(img)
             
-            print("=============================================================================")
-            print(img_name)    
+            print("=============================================================================")  
             display_save(img_name, [img_cv2], output_img_path = output_img_path)
             
             j = 0
@@ -303,8 +303,7 @@ class V():
             img, true_sgms, _ = load(img_name, mode = 'Class')
             img_cv2 = im.pil_to_cv2(img)
             
-            print("=============================================================================")
-            print(img_name)    
+            print("=============================================================================")   
             display_save(img_name, [img_cv2], output_img_path = output_img_path)
             
             j = 0

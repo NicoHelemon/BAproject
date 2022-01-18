@@ -57,6 +57,10 @@ def show(img_cv2):
         plt.show()
 
 def process(img, true_sgms):
+    """ Helping function processing the image and the ground truth segmentations
+        freshly read from PASCAL VOC. 
+        Returns also the undefined region of the ground truth segmentation
+    """
     img, true_sgms = torch.squeeze(img), torch.squeeze(true_sgms)
     true_sgms      = f1_to_f255(true_sgms.numpy())
     undef          = np.where(true_sgms == 255, 1, 0).astype(bool)

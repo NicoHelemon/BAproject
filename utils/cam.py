@@ -29,6 +29,19 @@ def conv1x1_from_lin(weight, bias):
     return conv1x1
 
 class CamExtension(nn.Module):
+    """
+    A class used to modify a model to make it 
+    output CAMs alongside the prediction
+
+    3 models can be extended: squeezenet11, resnet18 and densenet161
+
+    Attributes
+    ----------
+    model :
+        The model being extended
+
+    """
+
     def __init__(self, model):
         super(CamExtension, self).__init__()
         self.model = model
@@ -83,6 +96,15 @@ VOC_CLASSES        = json.open_json(json_path + 'voc-classes')
 VOC_TO_NET         = json.open_json(json_path + 'voc-to-imagenet-classes')
 
 class Cam:
+    """
+    A utility class gathering methods to get CAMs
+
+    Attributes
+    ----------
+    net :
+        A pretrained (CAM extended) network
+    """
+
     def __init__(self, model = 'squeezenet11'):
         self.net = CamExtension(model = model)
         self.net.eval()
@@ -91,8 +113,24 @@ class Cam:
         logit, cams = self.net(Variable(PREPROCESS(img).unsqueeze(0)))
         return logit, cams
 
-    # Returns the top1 class and associated probability and CAM
     def get_top1(self, img):
+        """Returns the top1 class and associated probability and CAM
+
+        Parameters
+        ----------
+        img :
+            The image
+
+        Returns
+        -------
+        simple_class : str
+            The top1 class
+        proba: float
+            The probability score associated to simple_class
+        cam: 2D np.array float
+            The class activation map of simple_class taking value in float interval [0, 1]
+        """
+
         logit, cams = self.feed_img(img)
 
         h_x = F.softmax(logit, dim = 1).data.squeeze()
@@ -105,11 +143,29 @@ class Cam:
 
         return simple_class, proba, cam
 
-
-    # Given a VOC class, search for the best associated 
-    # (according to the VOC-Imagenet mapping) Imagenet class.
-    # Returns the Imagenet class and associated, ranking (top n class), probability and CAM
     def get_top_voc_to_imagenet(self, img, voc_class):
+        """ Given a VOC class, search for the best associated 
+            (according to the VOC-Imagenet mapping) Imagenet class.
+            Returns the Imagenet class and associated, ranking (top n class), 
+            probability and CAM
+
+        Parameters
+        ----------
+        img :
+            The image
+        voc_class : str
+            The VOC class (ground truth)
+
+        Returns
+        -------
+        simple_class : str
+            Best associated ImageNet class
+        rank_proba: (int, float)
+            Ranking (top n) of class simple_class alongside the probability score
+        cam: 2D np.array float
+            The class activation map of simple_class taking value in float interval [0, 1]
+        """
+
         associated_imagenet_classes = VOC_TO_NET[voc_class]
 
         logit, cams = self.feed_img(img)
@@ -146,7 +202,22 @@ def heat_map(img_cv2, cam, heat_f = 0.3, img_f = 0.5):
     return im.rgb_swap_bgr(heatmap * heat_f + img_cv2 * img_f)
 
 def cam_to_gcmask(cam, t0, t1, t2):
-    # BGD, 0  ||t0||  PR_BGD, 2  ||t1||  PR_FGD, 3  ||t2||  FGD, 1
+    """ Digitize the CAM into a GrabCut mask according to thresholds t0, t1, t2
+        BGD, 0  ||t0||  PR_BGD, 2  ||t1||  PR_FGD, 3  ||t2||  FGD, 1
+
+    Parameters
+    ----------
+    cam :
+        The class activation map
+    t0, t1, t2 : float [0, 1]
+        Monotonic thresholds
+
+    Returns
+    -------
+    mask : 2D np.array uint8
+        The GrabCut mask taking values in [0, 1, 2, 3]
+    """
+
     max_coord = np.unravel_index(cam.argmax(), cam.shape)
     min_coord = np.unravel_index(cam.argmin(), cam.shape)
 
@@ -156,8 +227,8 @@ def cam_to_gcmask(cam, t0, t1, t2):
     mask = (2*mask - mask//2) % 4 # maps [0, 1, 2, 3] to [0, 2, 3, 1].
 
     if mask[max_coord] % 2 == 0:
-        mask[max_coord] = 1       # We should ensure that there at least on FGD pixel for anchoring
+        mask[max_coord] = 1       # We should ensure that there is at least one FGD pixel for anchoring
     if mask[min_coord] % 2 == 1:
-        mask[min_coord] = 0       # We should ensure that there at least on BGD pixel for anchoring
+        mask[min_coord] = 0       # We should ensure that there is at least one BGD pixel for anchoring
 
     return mask.astype('uint8')
